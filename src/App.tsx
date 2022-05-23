@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Autocomplete from './components/Autocomplete';
 
 const Wrapper = styled.div`
   background-color: #282c34;
@@ -9,6 +10,12 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   color: white;
+  padding: 5rem;
+`
+
+const Info = styled.div`
+  margin-top: 1em;
+  font-style: italic;
 `
 
 const Title = styled.h1`
@@ -19,6 +26,10 @@ function App() {
   return (
     <Wrapper>
         <Title>Input Component with Autocomplete</Title>
+        <Autocomplete/>
+        <Info>
+            Try searching your favorite movies.
+        </Info>
     </Wrapper>
   );
 }
