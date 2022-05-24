@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.js": "/ts-autocomplete/static/js/main.8bc262aa.js",
+    "static/js/787.9d18d1c4.chunk.js": "/ts-autocomplete/static/js/787.9d18d1c4.chunk.js",
+    "index.html": "/ts-autocomplete/index.html",
+    "static/media/loading.svg": "/ts-autocomplete/static/media/loading.1a30ffd79cbd7026b5b1a5707c6d98ed.svg",
+    "main.8bc262aa.js.map": "/ts-autocomplete/static/js/main.8bc262aa.js.map",
+    "787.9d18d1c4.chunk.js.map": "/ts-autocomplete/static/js/787.9d18d1c4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.8bc262aa.js"
+  ]
+}
