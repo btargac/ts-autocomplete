@@ -25,7 +25,7 @@ const Title = styled.h1`
 function App() {
   return (
     <Wrapper>
-        <Title>Input Component with Autocomplete</Title>
+        <Title>A Simple Autocomplete Component</Title>
         <Autocomplete/>
         <Info>
             Try searching your favorite movies.

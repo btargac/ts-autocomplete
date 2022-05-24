@@ -1,4 +1,4 @@
 export const sanitize = (expression: string) : string =>
-    expression.replace(/[*-\[\]{}()+?.,^$|#\s\\]/g, '').toLowerCase();
+    expression.trim().replace(/[*\-[\]{}()+?.,^$|#\\]/g, '').toLowerCase();
 
 export const createSearchRegex = (highlight: string) : RegExp => new RegExp(`(${highlight})`, 'ig');

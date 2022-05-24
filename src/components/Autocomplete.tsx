@@ -5,6 +5,9 @@ import Highlight from './Highlight';
 import {sanitize} from '../utils/searchRegexUtil';
 import {ReactComponent as LoadingIcon} from '../assets/loading.svg'
 
+const tmdbAPIKey = 'e3744181c068770f19000325a7f09906';
+const tmdbBaseUrl = 'https://api.themoviedb.org/3/search/movie';
+
 const InputWrapper = styled.div`
   position: relative;
 `
@@ -18,9 +21,11 @@ const Input = styled.input`
 const Suggestions = styled.div`
   background-color: black;
   width: 30rem;
+  max-height: 50vh;
   line-height: 1.5rem;
   font-size: 1.5rem;
   margin-top: 0.1rem;
+  overflow: auto;
 `;
 
 const LoadingComponent = styled(LoadingIcon)`
@@ -54,12 +59,13 @@ const Suggestion = styled.div`
 
   :hover {
     background-color: #0b286e;
+    cursor: pointer;
   }
 `;
 
 interface Movie {
     id: number;
-    name: string;
+    title: string;
 }
 
 const Autocomplete: FC = () => {
@@ -80,32 +86,31 @@ const Autocomplete: FC = () => {
         } else {
             setLoading(true);
 
-            const getSuggestions = async () => {
-                await new Promise(resolve => {
-                    timeOut = setTimeout(() => {
-                        resolve(null);
-                    }, 1000);
-                })
+            const getSuggestions = async () : Promise<void> => {
+                try {
+                    const response: Response = await fetch(`${tmdbBaseUrl}?api_key=${tmdbAPIKey}&language=en-US&query=${optimizedKeyword}&page=1&include_adult=true`);
+                    const {results: movies}: {results: Movie[]} = await response.json();
 
-                const mockMovies: Movie[] =
-                    [{
-                        id: 1,
-                        name: 'Starwars'
-                    }, {
-                        id: 2,
-                        name: 'Mad max'
-                    }];
-
-                const searchResults = mockMovies.filter(movie => movie.name.toLowerCase().includes(optimizedKeyword));
-                setSuggestions(searchResults);
-                setLoading(false);
+                    setSuggestions(movies);
+                    setLoading(false);
+                } catch (e) {
+                    console.warn(e);
+                    setSuggestions([]);
+                    setLoading(false);
+                }
             }
 
-            getSuggestions();
+            // wrapping the getSuggestion method with a timeout is the easiest way to throttle/debounce it
+            timeOut = setTimeout(() => {
+                getSuggestions();
+            }, 1000);
         }
 
         return () => {
+            // clear the previous timeout to avoid fetching data with an outdated search keyword
             clearTimeout(timeOut);
+            // and in such cases clear the loading state
+            setLoading(false);
         }
 
     }, [searchKeyword]);
@@ -120,7 +125,7 @@ const Autocomplete: FC = () => {
                 {
                     suggestions.map(suggestion => (
                         <Suggestion key={suggestion.id}>
-                            <Highlight text={suggestion.name} highlight={searchKeyword}/>
+                            <Highlight text={suggestion.title} highlight={searchKeyword}/>
                         </Suggestion>
                     ))
                 }
