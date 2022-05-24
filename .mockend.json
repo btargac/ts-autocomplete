@@ -1,6 +1,0 @@
-{
-  "Movie": {
-    "id": { "number": {} },
-    "name": { "string": {} }
-  }
-}
