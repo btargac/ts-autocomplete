@@ -100,7 +100,9 @@ const Autocomplete: FC = () => {
                 }
             }
 
-            // wrapping the getSuggestion method with a timeout is the easiest way to throttle/debounce it
+            // wrapping the getSuggestion method with a timeout is the easiest way to debounce it
+            // but for production prefer debounce util from underscore/lodash etc.
+            // or create a high order function that takes your func and returns a debounced version of it
             timeOut = setTimeout(() => {
                 getSuggestions();
             }, 1000);
